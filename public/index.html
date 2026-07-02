@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Talk to Kenny | Falcon Heights Real Estate</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div id="micGate" class="mic-gate" role="dialog" aria-modal="true" aria-labelledby="micGateTitle">
+    <div class="mic-gate-card">
+      <div class="mic-icon" aria-hidden="true">🎙️</div>
+      <p class="eyebrow">One quick setup</p>
+      <h2 id="micGateTitle">Enable your microphone</h2>
+      <p id="micGateText">
+        Kenny needs microphone access for the browser call. Your browser should show an Allow prompt now.
+      </p>
+      <button id="micPermissionButton" class="primary-button" type="button">
+        Enable microphone
+      </button>
+      <p id="micHelp" class="mic-help" hidden></p>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <a class="brand" href="/">Falcon Heights</a>
+    <a class="nav-link" href="/dashboard.html">Lead dashboard</a>
+  </header>
+
+  <main class="page-shell">
+    <section class="hero">
+      <p class="eyebrow">Dubai property assistance</p>
+      <h1>Tell us what you need, then talk to Kenny.</h1>
+      <p class="hero-copy">
+        Complete the short form. Kenny will ask about your area, budget,
+        property type, timeline, and preferred follow-up.
+      </p>
+    </section>
+
+    <section class="panel">
+      <form id="leadForm" novalidate>
+        <div class="field">
+          <label for="name">Full name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required />
+        </div>
+
+        <div class="field">
+          <label for="phone">Phone number</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+971..." required />
+        </div>
+
+        <div class="field">
+          <label for="email">Email <span>(optional)</span></label>
+          <input id="email" name="email" type="email" autocomplete="email" />
+        </div>
+
+        <div id="micReadyBadge" class="mic-ready-badge" hidden>
+          Microphone ready
+        </div>
+
+        <button id="submitButton" class="primary-button" type="submit">
+          Continue to voice call
+        </button>
+      </form>
+
+      <section id="callArea" class="call-area" hidden>
+        <div class="call-copy">
+          <p class="eyebrow">Your details are saved</p>
+          <h2>Start your conversation</h2>
+          <p>Press the green call button to speak with Kenny.</p>
+        </div>
+        <div id="widgetMount"></div>
+      </section>
+
+      <div id="status" class="status" role="status" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>

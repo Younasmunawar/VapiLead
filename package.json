@@ -1,0 +1,21 @@
+{
+  "name": "kenny-vapi-plain-html-render",
+  "version": "3.0.0",
+  "description": "Plain HTML/CSS/JavaScript Vapi browser voice agent with Vapi Structured Outputs, MongoDB, browser hang-up fallback, and Brevo email alerts.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "check": "node --check server.js && node --check public/app.js && node --check services/email.js"
+  },
+  "engines": {
+    "node": ">=20 <23"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5"
+  }
+}

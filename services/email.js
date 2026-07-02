@@ -17,6 +17,19 @@ function requiredEnv(name) {
   return value;
 }
 
+function parseRecipientEmails(value) {
+  const emails = String(value || "")
+    .split(",")
+    .map((email) => email.trim())
+    .filter(Boolean);
+
+  if (emails.length === 0) {
+    throw new Error("EMAIL_TO does not contain any valid recipient.");
+  }
+
+  return emails;
+}
+
 function buildEmailHtml(lead) {
   const rows = [
     ["Quality", lead.leadQuality],
@@ -184,16 +197,23 @@ function shouldRetry(error) {
 
 export async function sendLeadEmail(lead) {
   console.log("EMAIL_PROVIDER: brevo-http-api");
-  console.log("Sending Brevo email to:", process.env.EMAIL_TO);
-  console.log("Brevo sender:", process.env.EMAIL_FROM);
 
   const apiKey = requiredEnv("BREVO_API_KEY");
   const fromEmail = requiredEnv("EMAIL_FROM");
-  const toEmail = requiredEnv("EMAIL_TO");
+  const recipientEmails = parseRecipientEmails(
+    requiredEnv("EMAIL_TO")
+  );
 
   const fromName = String(
     process.env.EMAIL_FROM_NAME || "Kenny Voice Agent"
   ).trim();
+
+  console.log(
+    "Sending Brevo email to:",
+    recipientEmails.join(", ")
+  );
+
+  console.log("Brevo sender:", fromEmail);
 
   const leadName = String(lead?.name || "Unknown");
   const leadQuality = String(
@@ -206,12 +226,10 @@ export async function sendLeadEmail(lead) {
       email: fromEmail
     },
 
-    to: [
-      {
-        email: toEmail,
-        name: "Falcon Heights Team"
-      }
-    ],
+    to: recipientEmails.map((email) => ({
+      email,
+      name: "Falcon Heights Team"
+    })),
 
     subject: `Kenny lead: ${leadQuality} — ${leadName}`,
 

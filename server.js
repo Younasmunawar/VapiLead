@@ -183,79 +183,80 @@ app.get("/health", (_req, res) => {
   });
 });
 
-app.get("/api/test-email", async (req, res) => {
-  try {
-    const providedSecret = String(req.query.secret || "");
-    const expectedSecret = String(
-      process.env.TEST_EMAIL_SECRET || ""
-    );
+// app.get("/api/test-email", async (req, res) => {
+//   try {
+//     const providedSecret = String(req.query.secret || "");
+//     const expectedSecret = String(
+//       process.env.TEST_EMAIL_SECRET || ""
+//     );
 
-    if (!expectedSecret) {
-      return res.status(500).json({
-        ok: false,
-        error: "TEST_EMAIL_SECRET is missing on Render."
-      });
-    }
+//     if (!expectedSecret) {
+//       return res.status(500).json({
+//         ok: false,
+//         error: "TEST_EMAIL_SECRET is missing on Render."
+//       });
+//     }
 
-    if (providedSecret !== expectedSecret) {
-      return res.status(401).json({
-        ok: false,
-        error: "Unauthorized."
-      });
-    }
+//     if (providedSecret !== expectedSecret) {
+//       return res.status(401).json({
+//         ok: false,
+//         error: "Unauthorized."
+//       });
+//     }
 
-    console.log("DEPLOYED_EMAIL_TEST_STARTED");
+//     console.log("DEPLOYED_EMAIL_TEST_STARTED");
 
-    const testLead = {
-      name: "Render Test Lead",
-      phone: "+923000000000",
-      email: process.env.EMAIL_TO || "unknown",
-      whatsappNumber: "same_as_phone",
-      intent: "buy",
-      purpose: "investment",
-      propertyType: "apartment",
-      preferredArea: "Business Bay",
-      budget: "1 million AED",
-      timeline: "within three months",
-      paymentMethod: "cash",
-      bestFollowUpTime: "anytime",
-      leadQuality: "hot",
-      callerSentiment: "positive",
-      status: "completed",
-      summary:
-        "This is a deployed Render test of the Brevo email integration.",
-      nextStep:
-        "No action is required. This email confirms the integration is working.",
-      transcript: [
-        "AI: Hello, this is Kenny from Falcon Heights.",
-        "User: I want to buy an apartment for investment.",
-        "AI: What budget are you considering?",
-        "User: Around one million AED."
-      ].join("\n")
-    };
+//     const testLead = {
+//       name: "Render Test Lead",
+//       phone: "+923000000000",
+//       email: process.env.EMAIL_TO || "unknown",
+//       whatsappNumber: "same_as_phone",
+//       intent: "buy",
+//       purpose: "investment",
+//       propertyType: "apartment",
+//       preferredArea: "Business Bay",
+//       budget: "1 million AED",
+//       timeline: "within three months",
+//       paymentMethod: "cash",
+//       bestFollowUpTime: "anytime",
+//       leadQuality: "hot",
+//       callerSentiment: "positive",
+//       status: "completed",
+//       summary:
+//         "This is a deployed Render test of the Brevo email integration.",
+//       nextStep:
+//         "No action is required. This email confirms the integration is working.",
+//       transcript: [
+//         "AI: Hello, this is Kenny from Falcon Heights.",
+//         "User: I want to buy an apartment for investment.",
+//         "AI: What budget are you considering?",
+//         "User: Around one million AED."
+//       ].join("\n")
+//     };
 
-    const emailSent = await sendLeadEmail(testLead);
+//     const emailSent = await sendLeadEmail(testLead);
 
-    console.log("DEPLOYED_EMAIL_TEST_SUCCESS:", emailSent);
+//     console.log("DEPLOYED_EMAIL_TEST_SUCCESS:", emailSent);
 
-    return res.status(200).json({
-      ok: true,
-      emailSent,
-      message:
-        "Brevo accepted the test email. Check the recipient inbox and Brevo transactional logs."
-    });
-  } catch (error) {
-    console.error(
-      "DEPLOYED_EMAIL_TEST_FAILED:",
-      error?.stack || error?.message || error
-    );
+//     return res.status(200).json({
+//       ok: true,
+//       emailSent,
+//       message:
+//         "Brevo accepted the test email. Check the recipient inbox and Brevo transactional logs."
+//     });
+//   } catch (error) {
+//     console.error(
+//       "DEPLOYED_EMAIL_TEST_FAILED:",
+//       error?.stack || error?.message || error
+//     );
 
-    return res.status(500).json({
-      ok: false,
-      error: error?.message || "Email test failed."
-    });
-  }
-});
+//     return res.status(500).json({
+//       ok: false,
+//       error: error?.message || "Email test failed."
+//     });
+//   }
+// });
+
 app.get("/api/config", (_req, res) => {
   res.json({
     vapiPublicKey: process.env.VAPI_PUBLIC_KEY || "",
